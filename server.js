@@ -16,9 +16,7 @@ const db = knex({
 
 
 const app = express();
-app.listen(3000, () =>{
-	('app is running on port 3000.');
-})
+
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -90,7 +88,6 @@ app.post('/signin', (req, res) => {
 			return db.select('*').from('users')
 				.where('email', '=',req.body.email)
 				.then(user =>{
-					console.log(user);
 					res.json(user[0])
 				})
 				.catch(err => res.status(400).json('Unable to get user'))
@@ -128,4 +125,9 @@ app.post('/register', (req, res) =>{
 			.catch(trx.rollback)
 		})
 		.catch(err => res.status(400).json('Unable to register.'))
+})
+
+ 
+app.listen(3000, () =>{
+	console.log('app is running on port 3000.');
 })
